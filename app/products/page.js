@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import {
@@ -15,7 +15,7 @@ import { isAuthenticated } from "../../lib/auth";
 const LOCAL_PRODUCTS_KEY = "localProducts";
 const DELETED_PRODUCTS_KEY = "deletedProducts";
 
-export default function ProductsPage() {
+function ProductsPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -843,7 +843,6 @@ export default function ProductsPage() {
       <div className="mx-auto max-w-7xl">
 
         <section className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
-
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
             <div>
@@ -873,9 +872,7 @@ export default function ProductsPage() {
               <LogoutButton />
 
             </div>
-
           </div>
-
         </section>
 
         <section className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
@@ -1483,5 +1480,25 @@ export default function ProductsPage() {
 
       </div>
     </main>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-gray-100 p-6">
+          <div className="mx-auto flex min-h-[70vh] max-w-7xl items-center justify-center">
+            <div className="rounded-xl bg-white px-8 py-6 shadow">
+              <p className="text-lg font-medium text-gray-700">
+                Loading products...
+              </p>
+            </div>
+          </div>
+        </main>
+      }
+    >
+      <ProductsPageContent />
+    </Suspense>
   );
 }
