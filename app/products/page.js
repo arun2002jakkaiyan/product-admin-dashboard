@@ -1,7 +1,16 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+import {
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 
 import {
   getProducts,
@@ -842,7 +851,10 @@ function ProductsPageContent() {
     <main className="min-h-screen bg-gray-100 p-6">
       <div className="mx-auto max-w-7xl">
 
+        {/* HEADER */}
+
         <section className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
+
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
             <div>
@@ -872,12 +884,18 @@ function ProductsPageContent() {
               <LogoutButton />
 
             </div>
+
           </div>
+
         </section>
+
+        {/* FILTERS */}
 
         <section className="mb-6 rounded-2xl bg-white p-6 shadow-sm">
 
           <div className="grid gap-5 md:grid-cols-3">
+
+            {/* SEARCH */}
 
             <div>
               <label
@@ -898,6 +916,8 @@ function ProductsPageContent() {
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
             </div>
+
+            {/* CATEGORY */}
 
             <div>
               <label
@@ -1014,8 +1034,11 @@ function ProductsPageContent() {
                 <option value="womens-watches">
                   Women's Watches
                 </option>
+
               </select>
             </div>
+
+            {/* SORT */}
 
             <div>
               <label
@@ -1067,11 +1090,15 @@ function ProductsPageContent() {
 
         </section>
 
+        {/* ERROR MESSAGE */}
+
         {error && (
           <div className="mb-5 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-600">
             {error}
           </div>
         )}
+
+        {/* PAGINATION INFO */}
 
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
@@ -1132,7 +1159,10 @@ function ProductsPageContent() {
 
         </div>
 
+        {/* PRODUCTS */}
+
         {sortedProducts.length === 0 ? (
+
           <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
 
             <h2 className="text-xl font-semibold text-gray-900">
@@ -1144,8 +1174,12 @@ function ProductsPageContent() {
             </p>
 
           </div>
+
         ) : (
+
           <>
+
+            {/* DESKTOP TABLE */}
 
             <div className="hidden overflow-hidden rounded-2xl bg-white shadow-sm md:block">
 
@@ -1191,10 +1225,13 @@ function ProductsPageContent() {
 
                   {sortedProducts.map(
                     (product, index) => (
+
                       <tr
                         key={`${product.id}-${index}`}
                         className="transition hover:bg-gray-50"
                       >
+
+                        {/* IMAGE */}
 
                         <td className="px-6 py-4">
 
@@ -1214,6 +1251,8 @@ function ProductsPageContent() {
 
                         </td>
 
+                        {/* TITLE */}
+
                         <td
                           className="cursor-pointer px-6 py-4 font-semibold text-gray-900"
                           onClick={() =>
@@ -1227,11 +1266,15 @@ function ProductsPageContent() {
                           }
                         </td>
 
+                        {/* CATEGORY */}
+
                         <td className="px-6 py-4 text-gray-600">
                           {
                             product.category
                           }
                         </td>
+
+                        {/* PRICE */}
 
                         <td className="px-6 py-4 font-medium text-gray-700">
                           $
@@ -1240,6 +1283,8 @@ function ProductsPageContent() {
                           }
                         </td>
 
+                        {/* RATING */}
+
                         <td className="px-6 py-4 text-gray-700">
                           {
                             product.rating ??
@@ -1247,12 +1292,16 @@ function ProductsPageContent() {
                           }
                         </td>
 
+                        {/* STOCK */}
+
                         <td className="px-6 py-4 text-gray-700">
                           {
                             product.stock ??
                             "-"
                           }
                         </td>
+
+                        {/* ACTIONS */}
 
                         <td className="px-6 py-4">
 
@@ -1294,6 +1343,7 @@ function ProductsPageContent() {
                         </td>
 
                       </tr>
+
                     )
                   )}
 
@@ -1303,10 +1353,13 @@ function ProductsPageContent() {
 
             </div>
 
+            {/* MOBILE CARDS */}
+
             <div className="space-y-4 md:hidden">
 
               {sortedProducts.map(
                 (product, index) => (
+
                   <div
                     key={`${product.id}-${index}`}
                     className="rounded-2xl bg-white p-5 shadow-sm"
@@ -1432,12 +1485,16 @@ function ProductsPageContent() {
                     </div>
 
                   </div>
+
                 )
               )}
 
             </div>
 
+            {/* PAGINATION */}
+
             {totalPages > 1 && (
+
               <div className="mt-6 flex items-center justify-center gap-4">
 
                 <button
@@ -1473,15 +1530,21 @@ function ProductsPageContent() {
                 </button>
 
               </div>
+
             )}
 
           </>
+
         )}
 
       </div>
     </main>
   );
 }
+
+// ==================================================
+// SUSPENSE WRAPPER
+// ==================================================
 
 export default function ProductsPage() {
   return (
